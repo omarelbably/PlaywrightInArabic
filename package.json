@@ -9,7 +9,6 @@
     "open:reports": "npx allure open ./allure-report",
     "pretest": "npm run clean:reports",
     "posttest": "npm run generate:reports",
-    "script:to:run": "npx playwright test pom",
     "test": "npm run script:to:run || npm run posttest"
   },
   "keywords": [],

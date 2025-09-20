@@ -5,8 +5,8 @@ import LoginPage from "./pages/loginPage/loginPage";
 import ProductPage from "./pages/productPage/productPage";
 
 let page:Page;
-let loginPage;
-let productPage;
+let loginPage: LoginPage;
+let productPage: ProductPage;
 test.describe('Suite 1',()=>{
 test.beforeEach(async({browser})=>{
     page = await browser.newPage();
@@ -21,26 +21,27 @@ test.afterEach(async({})=>{
 test('E2E', async({})=>{
     await loginPage.enterUsername(testData.username);
     await loginPage.enterPassword(testData.password);
-    await loginPage.takeScreenshot('./tests/screenshots/loginPage.png');
+    await loginPage.actions.takeScreenshot('./tests/screenshots/loginPage.png');
     await loginPage.clickOnLoginButton();
     await productPage.clickOnAddToCartBtn();
-    await productPage.takeScreenshot('./tests/screenshots/productPage.png');
+    await productPage.actions.takeScreenshot('./tests/screenshots/productPage.png');
     await productPage.clickOnCartBtn();
-    await productPage.takeScreenshot('./tests/screenshots/cartPage.png');    
+    await productPage.actions.takeScreenshot('./tests/screenshots/cartPage.png');    
 })
 
 test('E2E2', async({})=>{
     await loginPage.enterUsername(testData.username);
     await loginPage.enterPassword(testData.password);
-    await loginPage.takeScreenshot('./tests/screenshots/loginPage.png');
+    await loginPage.actions.takeScreenshot('./tests/screenshots/loginPage.png');
     await loginPage.clickOnLoginButton();
     await productPage.clickOnAddToCartBtn();
-    await productPage.takeScreenshot('./tests/screenshots/productPage.png');
+    await productPage.actions.takeScreenshot('./tests/screenshots/productPage.png');
     await productPage.clickOnCartBtn();
-    await productPage.takeScreenshot('./tests/screenshots/cartPage.png');    
+    await productPage.actions.takeScreenshot('./tests/screenshots/cartPage.png');    
 })
 })
 
 test('alone', async()=>{
     console.log("I'm alone");
 })
+

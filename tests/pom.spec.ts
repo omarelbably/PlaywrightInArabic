@@ -1,16 +1,22 @@
+import { Locator } from "playwright/test";
 import { expect, test } from "../fixtures/fixture";
 import LoginPage from "./pages/loginPage/loginPage";
 import ProductPage from "./pages/productPage/productPage";
 import * as testData from "./testData/testData.json";
+import { get } from "http";
+import path from 'path';
+import Actions from "./pages/actions";
 
-let page;
-let loginPage;
-let productPage;
-test.describe('suite 1', ()=>{
+let page:any;
+let loginPage: LoginPage;
+let productPage: ProductPage;
+let actions: Actions;
 test.beforeEach(async({browser})=>{
     page = await browser.newPage();
     loginPage = new LoginPage(page);
     productPage = new ProductPage(page);
+    actions = new Actions(page);
+
     await page.goto('https://www.saucedemo.com/');
 })
 test.afterEach(async()=>{
@@ -21,14 +27,13 @@ test.afterEach(async()=>{
 test('E2E', async({})=>{
     await loginPage.enterUsername(testData.username);
     await loginPage.enterPassword(testData.password);
-    await loginPage.takeScreenshot('./tests/screenshots/loginPage.png');
+    await loginPage.actions.takeScreenshot('./tests/screenshots/loginPage.png');
     await loginPage.clickOnLoginButton();
     await productPage.clickOnAddToCartBtn();
-    await productPage.takeScreenshot('./tests/screenshots/productPage.png');
+    await productPage.actions.takeScreenshot('./tests/screenshots/productPage.png');
     await productPage.clickOnCartBtn();
-    await productPage.takeScreenshot('./tests/screenshots/cartPage.png');    
-})
-})
+    await productPage.actions.takeScreenshot('./tests/screenshots/cartPage.png');    
+});
 
 test('outside suite @sanity', async({})=>{
     console.log('outside the suite sanity');
@@ -41,4 +46,30 @@ test('outside suite2 @smoke', async({})=>{
 })
 
 
+test('getText', async()=>{
+    await page.goto('https://www.saucedemo.com/');
 
+    const title = page.locator('.login_logo');
+    const loginBtn = page.locator('[id="login-button"]');
+    // actions.getElementScreenshot(title, path.join(__dirname, '../tests/screenshots/title.png'));
+    expect(await title.screenshot()).toMatchSnapshot('title.png');
+    expect(await loginBtn.screenshot()).toMatchSnapshot('loginBtn.png');
+    console.log(await actions.getElementText(title));    
+});
+
+test('codegenT', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+  await expect(page.locator('[data-test="username"]')).toBeVisible();
+  await page.locator('[data-test="username"]').click();
+  await page.locator('[data-test="username"]').fill('standard_user');
+  await expect(page.locator('[data-test="password"]')).toBeVisible();
+  await page.locator('[data-test="password"]').click();
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="login-button"]').click();
+  await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
+  await expect(page.locator('[data-test="title"]')).toContainText('Products');
+  await page.locator('[data-test="shopping-cart-link"]').click();
+  await expect(page.locator('[data-test="checkout"]')).toBeVisible();
+  await page.locator('[data-test="checkout"]').click();
+  await expect(page.locator('[data-test="firstName"]')).toBeVisible();
+});
