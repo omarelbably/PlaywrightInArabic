@@ -6,4 +6,4 @@ RUN apt-get update &&\
     npm install
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV commandToRunTests="npm run test"
-CMD ["sh", "-c", "$commandToRunTests"]
+# CMD ["sh", "-c", "$commandToRunTests"]
