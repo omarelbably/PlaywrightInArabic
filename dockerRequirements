@@ -1,0 +1,6 @@
+- Get an image with nodejs/playwright installed
+- Set the working directory
+- Copy our code to the container
+- Install Java and assign Java environment variables
+- Run npm install to setup our project
+- Run the required test cases

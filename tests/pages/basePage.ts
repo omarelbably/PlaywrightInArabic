@@ -1,19 +1,11 @@
 import { Locator, Page } from '@playwright/test';
+import Actions from './actions';
 
 export default class BasePage{
     protected readonly page:Page;
+    public readonly actions;
     constructor(page:Page){
         this.page = page;
-    }
-
-    protected async clickOnElement(element: Locator){
-        await element.click();
-    }
-
-    protected async enterTextToElement(element: Locator, text: string){
-        await element.fill(text);
-    }
-    public async takeScreenshot(filePath: string){
-        await this.page.screenshot({path:filePath});
+        this.actions = new Actions(page);
     }
 }

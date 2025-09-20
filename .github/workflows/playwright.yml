@@ -22,9 +22,16 @@ jobs:
       run: npx playwright install chromium --with-deps
     - name: Run Playwright tests
       run: npm run test
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     - name: Upload allure report
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         path: allure-report/
         retention-days: 30
+
+        name: Example workflow for Node using Snyk
+

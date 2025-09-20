@@ -5,10 +5,10 @@ export default class ProductPage extends BasePage{
     private readonly cartBtn = this.page.locator('[id="shopping_cart_container"]');
 
     async clickOnAddToCartBtn(){
-        await this.clickOnElement(this.sauceLabsBackpackAddToCartBtn);
+        await this.actions.clickOnElement(this.sauceLabsBackpackAddToCartBtn);
     }
     async clickOnCartBtn(){
-        await this.clickOnElement(this.cartBtn);
+        await this.actions.clickOnElement(this.cartBtn);
     }
 
 }
