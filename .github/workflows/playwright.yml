@@ -1,39 +1,39 @@
-# name: Morning pipeline for Playwright tests
-# on:
-#   schedule:
-#     - cron: '0 12 * * *'
-#   push:
-#     branches:
-#       - '**'
-#   pull_request:
-#     branches: [ main ]
-# jobs:
-#   Playwright-tests:
-#     timeout-minutes: 60
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v4
-#     - uses: actions/setup-node@v4
-#       with:
-#         node-version: lts/*
-#     - name: Install dependencies
-#       run: npm ci
-#     - name: Install Playwright Browsers
-#       run: npx playwright install chromium --with-deps
-#     - name: Run Playwright tests
-#       run: npm run test
+name: Morning pipeline for Playwright tests
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches: [ main ]
+jobs:
+  Playwright-tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install chromium --with-deps
+    - name: Run Playwright tests
+      run: npm run test
 
-#     - name: Upload allure report
-#       uses: actions/upload-artifact@v4
-#       if: ${{ !cancelled() }}
-#       with:
-#         path: allure-report/
-#         retention-days: 30
+    - name: Upload allure report
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        path: allure-report/
+        retention-days: 30
 
-#         name: Example workflow for Node using Snyk
+        name: Example workflow for Node using Snyk
 
 
-#     - name: Run Snyk to check for vulnerabilities
-#       uses: snyk/actions/node@master
-#       env:
-#         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}        
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}        
