@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Run playwright test on docker
         run: |
-         docker-compose up
+         docker compose up
           
       - name: Upload allure report
         uses: actions/upload-artifact@v4
