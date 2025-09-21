@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/playwright:v1.55.0-noble
-WORKDIR /projectHome
+WORKDIR /app
 COPY . .
 RUN apt-get update &&\
     apt-get install -y openjdk-17-jre-headless &&\

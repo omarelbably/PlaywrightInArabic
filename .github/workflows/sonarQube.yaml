@@ -7,9 +7,9 @@ jobs:
       - name: Run playwright test on docker
         run: |
          docker run --rm \
-          -v ${{ github.workspace }}:/projectHome \
-          -w /projectHome \
-          omarelbably/playwrightautomation \
+          -v ${{ github.workspace }}:/app \
+          -w /app \
+          omarelbably/playwrightautomationdocker \
           sh -c "npx playwright test"
           
       - name: Upload allure report
