@@ -24,7 +24,7 @@ jobs:
         run: |
           testToRun=${{ github.event.inputs.test-to-run }}
           if [ -z "$testToRun" ]; then
-          testToRun="smoke"
+          testToRun="npm run test"
           fi
 
           docker run --rm -v ${{ github.workspace }}:/app -w /app omarelbably/playwrightautomation sh -c "@$testToRun"
