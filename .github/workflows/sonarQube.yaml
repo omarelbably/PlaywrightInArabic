@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Run playwright test on docker
         run: |
-         docker run --rm -v $(pwd)/PlaywrightInArabic:/app omarelbably/playwrightautomationdocker sh -c "npx playwright test"
+         docker-compose up
           
       - name: Upload allure report
         uses: actions/upload-artifact@v4
