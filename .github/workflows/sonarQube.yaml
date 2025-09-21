@@ -6,4 +6,4 @@ jobs:
     steps:
       - name: Run playwright test on docker
         run: |
-          docker run --rm omarelbably/playwrightautomation npx playwright test api --workers=1 
+          docker run --rm omarelbably/playwrightautomation sh -c "npm run test" 
