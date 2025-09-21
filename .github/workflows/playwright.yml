@@ -27,7 +27,7 @@ jobs:
           testToRun="npm run test"
           fi
 
-          docker run --rm -v ${{ github.workspace }}:/projectHome -w /projectHome omarelbably/playwrightautomation sh -c "@$testToRun"
+          docker run --rm -v ${{ github.workspace }}:/app -w /app omarelbably/playwrightautomation sh -c "@$testToRun"
 
       - name: Upload allure report
         uses: actions/upload-artifact@v4
