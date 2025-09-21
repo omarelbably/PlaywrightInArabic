@@ -22,7 +22,12 @@ jobs:
     steps:
       - name: Run playwright test on docker
         run: |
-          docker run --rm -v ${{ github.workspace }}:/app -w /app omarelbably/playwrightautomation sh -c "${{github.event.inputs.test-to-run}}"
+          testToRun=${{ github.event.inputs.test-to-run }}
+          if [ -z "$testToRun" ]; then
+          testToRun="smoke"
+          fi
+
+          docker run --rm -v ${{ github.workspace }}:/app -w /app omarelbably/playwrightautomation sh -c "@$testToRun"
 
       - name: Upload allure report
         uses: actions/upload-artifact@v4
