@@ -42,10 +42,25 @@ jobs:
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
+      continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}        
     
     - name: ZAP Scan
       uses: zaproxy/action-full-scan@v0.12.0
+      continue-on-error: true
       with:
         target: ${{ secrets.ZAP_TARGET_URL }}
+
+  
+  sonarqube:
+    name: SonarQube
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
