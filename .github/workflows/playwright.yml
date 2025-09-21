@@ -7,53 +7,51 @@ on:
       - '**'
   pull_request:
     branches: [ main ]
-    
+
+  workflow_dispatch:
+    inputs:
+      test-to-run:
+        description: 'Add your npx code here'
+        required: false
+        default: 'npm run test'
+
 jobs:
-  Playwright-tests:
+  run-dockerized-playwright-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install chromium --with-deps
-    - name: Run Playwright tests
-      run: npm run test
+      - name: Run playwright test on docker
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app -w /app omarelbably/playwrightautomation ${{github.event.inputs.test-to-run}}
 
-    - name: Upload allure report
-      uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: allure-results
-        path: allure-report/
-        retention-days: 30
+      - name: Upload allure report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: allure-results
+          path: allure-report/
+          retention-days: 30
 
-    - name: Upload Playwright test results
-      uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-test-results
-        path: test-results/
-        retention-days: 30
+      - name: Upload Playwright test results
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-test-results
+          path: test-results/
+          retention-days: 30
+  run-snyk-scan:
+    needs: run-dockerized-playwright-test
+    name: Snyk scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
 
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
-      continue-on-error: true
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}        
-    
-    - name: ZAP Scan
-      uses: zaproxy/action-full-scan@v0.12.0
-      continue-on-error: true
-      with:
-        target: ${{ secrets.ZAP_TARGET_URL }}
-
-  
-  sonarqube:
+  run-sonarqube-scan:
+    needs: run-dockerized-playwright-test
     name: SonarQube
     runs-on: windows-latest
     steps:
@@ -64,3 +62,17 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  run-zap-scan:
+    needs: run-dockerized-playwright-test
+    name: Zap scan
+    runs-on: ubuntu-latest
+    steps:  
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.12.0
+        continue-on-error: true
+        with:
+          target: ${{ secrets.ZAP_TARGET_URL }}
+
+  
+  

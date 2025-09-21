@@ -1,7 +1,7 @@
-name: Build
+name: Optimized playwright test using docker
 on: [push, pull_request]
 jobs:
-  sonarqube:
+  run-dockerized-playwright-test:
     runs-on: ubuntu-latest
     steps:
       - name: Run playwright test on docker
