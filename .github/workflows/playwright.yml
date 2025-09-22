@@ -1,4 +1,6 @@
 name: test pipeline on docker
+env:
+  code-to-run: npm run test
 on:
   schedule:
     - cron: '0 12 * * *'
@@ -27,7 +29,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run playwright test on docker
         run: |
-          docker run --rm -v ${{github.workspace}}:/app omarelbably/playwrightautomationdocker sh -c '${{github.event.inputs.test-to-run}}'
+          docker run --rm -v ${{github.workspace}}:/app omarelbably/playwrightautomationdocker sh -c '$inputs.test-to-run'
 
       - name: Upload allure report
         uses: actions/upload-artifact@v4
