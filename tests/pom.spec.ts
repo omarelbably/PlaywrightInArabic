@@ -6,6 +6,8 @@ import * as testData from "./testData/testData.json";
 import { get } from "http";
 import path from 'path';
 import Actions from "./pages/actions";
+import * as dotenv from 'dotenv';
+dotenv.config({path: './.env'});
 
 let page:any;
 let loginPage: LoginPage;
@@ -57,14 +59,14 @@ test('getText', async()=>{
     console.log(await actions.getElementText(title));    
 });
 
-test('codegenT', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
+test('codegenT', async () => {
+  await page.goto(process.env.base_url);
   await expect(page.locator('[data-test="username"]')).toBeVisible();
   await page.locator('[data-test="username"]').click();
-  await page.locator('[data-test="username"]').fill('standard_user');
+  await page.locator('[data-test="username"]').fill(process.env.login_username);
   await expect(page.locator('[data-test="password"]')).toBeVisible();
   await page.locator('[data-test="password"]').click();
-  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="password"]').fill(process.env.login_password);
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
   await expect(page.locator('[data-test="title"]')).toContainText('Products');
