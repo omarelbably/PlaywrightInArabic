@@ -1,18 +1,16 @@
-name: Morning pipeline for Playwright tests
+name: test pipeline on docker
 on:
   schedule:
     - cron: '0 12 * * *'
   push:
     branches:
       - '**'
-      - '!main'
   pull_request:
     branches: [ main ]
   workflow_run:
-    workflows: [workflow name]
+    workflows: [build]
     types:
       - completed
-
   workflow_dispatch:
     inputs:
       test-to-run:
