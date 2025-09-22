@@ -24,12 +24,15 @@ jobs:
   run-dockerized-playwright-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    container:
+      image: omarelbably/playwrightautomationdocker
+      env:
+        commandToRunTests: npm run test
+      volumes:
+        - ${{github.workspace}}:/app
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Run playwright test on docker
-        run: |
-          docker run --rm -v ${{github.workspace}}:/app omarelbably/playwrightautomationdocker sh -c "${{env.code-to-run}}"
 
       - name: Upload allure report
         uses: actions/upload-artifact@v4
