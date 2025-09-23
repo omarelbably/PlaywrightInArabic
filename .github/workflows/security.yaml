@@ -1,10 +1,10 @@
 name: Playwright Tests with Caching
 on:
-    workflow_run:
-      workflows: ["Playwright Tests with Caching"]
-      types:
-        - completed
-  
+  workflow_run:
+    workflows: [Playwright Tests with Caching]
+    types:
+      - completed
+
 jobs:
   run-snyk-scan:
     name: Snyk scan
