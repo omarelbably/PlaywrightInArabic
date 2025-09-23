@@ -1,6 +1,6 @@
 import {test, expect, request}  from '@playwright/test';
 let objectID = null;
-let fullPathWithId: string;
+let fullPathWithId: string | any;
 const baseURL = 'https://api.restful-api.dev/';
 const objectPath = 'objects'
 const fullUrlWithObjectPath = baseURL+objectPath;
