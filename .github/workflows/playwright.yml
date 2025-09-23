@@ -1,6 +1,4 @@
 name: Run playwright test cases with caching
-env:
-  test-to-run: ${{ github.event.inputs.test-to-run }}
 on:
   schedule:
     - cron: '0 12 * * *'
@@ -36,6 +34,8 @@ jobs:
         run: npm ci
 
       - name: Run tests
+        env:
+          test-to-run: ${{ github.event.inputs.test-to-run }}
         run: | 
           ${{env.test-to-run}}
   
