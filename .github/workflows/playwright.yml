@@ -86,14 +86,8 @@ jobs:
   run-snyk-scan:
     name: Snyk scan
     needs: run-playwright-test
-    if: |
-      ${{github.event_name}} == 'push' &&
-        (
-          contains(join(${{github.event.commits.*.added}}), 'tests/**') ||
-          contains(join(${{github.event.commits.*.added}}), 'tests/**') ||
-          contains(join(${{github.event.commits.*.added}}), 'tests/**')
-        )
     runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'tests/**') || contains(github.event.pull_request.changed_files, 'tests/**') }}
     steps:
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
@@ -102,13 +96,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
 
   run-sonarqube-scan:
-    if: |
-      ${{github.event_name}} == 'push' &&
-        (
-          contains(join(github.event.commits.*.added), 'tests/') ||
-          contains(join(github.event.commits.*.modified), 'tests/') ||
-          contains(join(github.event.commits.*.removed), 'tests/')
-        )
+    if: ${{ contains(github.event.head_commit.message, 'tests/**') || contains(github.event.pull_request.changed_files, 'tests/**') }}
     needs: run-playwright-test
     name: SonarQube
     runs-on: windows-latest
