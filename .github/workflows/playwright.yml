@@ -16,8 +16,28 @@ on:
       test-to-run:
         description: 'Add your npx code here'
         required: false
-        default: 'npm run test'
+        default: 'npm run script:to:run || npm run posttest'
         type: string
+      workers:
+        description: 'Number of workers to use'
+        required: false
+        default: '1'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+      browsers:
+        description: 'browser to run tests on'
+        required: false
+        default: 'chromium'
+        type: choice
+        options:
+          - 'chromium'
+          - 'firefox'
+          - 'webkit'
+          - 'all'
 
 jobs:
   run-playwright-test:
@@ -36,9 +56,11 @@ jobs:
       - name: Run tests
         env:
           test-to-run: ${{ github.event.inputs.test-to-run || 'npm run test' }}
+          workers: ${{ github.event.inputs.workers || '1' }}
+          browsers: ${{ github.event.inputs.browsers || 'chromium' }}
         run: | 
-          ${{env.test-to-run}}
-  
+          ${{env.test-to-run}} --workers=${{env.workers}} --project=${{env.browsers}}
+   
       - name: Upload allure report
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
