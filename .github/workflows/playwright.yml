@@ -7,10 +7,7 @@ on:
       - '**'
   pull_request:
     branches: [ main ]
-  workflow_run:
-    workflows: [build]
-    types:
-      - completed
+
   workflow_dispatch:
     inputs:
       test-to-run:
@@ -84,4 +81,16 @@ jobs:
           retention-days: 30
 
   
-  
+      - name: Generate Test Results Summary
+        if: always()
+        run: |
+          echo "## 🧪 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workflow**: ${{ github.workflow }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger Type**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Artifacts Available" >> $GITHUB_STEP_SUMMARY
+          echo "- **Playwright Report**: HTML test report" >> $GITHUB_STEP_SUMMARY
+          echo "- **Test Results**: Screenshots, videos, traces" >> $GITHUB_STEP_SUMMARY
+          echo "- **Allure Results**: Raw test data for reporting" >> $GITHUB_STEP_SUMMARY
