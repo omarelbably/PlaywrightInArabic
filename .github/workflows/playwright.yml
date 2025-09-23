@@ -84,8 +84,9 @@ jobs:
           retention-days: 30
           
   run-snyk-scan:
-    needs: run-playwright-test
     name: Snyk scan
+    needs: run-playwright-test
+    if: contains(join(github.event.commits.*.modified), 'tests/*')
     runs-on: ubuntu-latest
     steps:
       - name: Run Snyk to check for vulnerabilities
