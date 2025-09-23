@@ -16,7 +16,7 @@ on:
       test-to-run:
         description: 'Add your npx code here'
         required: false
-        default: 'npm run script:to:run || npm run posttest'
+        default: 'npm run script:to:run'
         type: string
       workers:
         description: 'Number of workers to use'
