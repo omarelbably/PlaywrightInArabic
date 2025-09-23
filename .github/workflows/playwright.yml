@@ -43,8 +43,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install dependencies
+        run: npm ci
       - name: Cache Playwright browsers
         uses: actions/cache@v3
+        id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
@@ -52,11 +55,9 @@ jobs:
             ${{ runner.os }}-playwright-
 
       - name: Install Playwright browsers if missing
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         shell: bash
         run: npx playwright install --with-deps
-        
-      - name: Install dependencies
-        run: npm ci
       
       - name: Run Playwright tests
         env:
