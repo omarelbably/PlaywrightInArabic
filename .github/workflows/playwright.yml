@@ -38,6 +38,11 @@ on:
           - 'firefox'
           - 'webkit'
           - 'all'
+      base-url:
+        description: 'Base URL for tests'
+        required: false
+        default: '--base-url=https://example.com'
+        type: string
 
 jobs:
   run-playwright-test:
@@ -55,11 +60,11 @@ jobs:
 
       - name: Run tests
         env:
-          test-to-run: ${{ github.event.inputs.test-to-run || 'npm run test' }}
+          test-to-run: ${{ github.event.inputs.test-to-run || 'npm run script:to:run' }}
           workers: ${{ github.event.inputs.workers || '1' }}
           browsers: ${{ github.event.inputs.browsers || 'chromium' }}
         run: | 
-          ${{env.test-to-run}} --workers=${{env.workers}} --project=${{env.browsers}}
+          ${{env.test-to-run}} -- --workers=${{env.workers}} --project=${{env.browsers}} ${{github.event.inputs.base-url}} || npm run posttest
    
       - name: Upload allure report
         uses: actions/upload-artifact@v4
