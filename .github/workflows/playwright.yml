@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get Playwright browsers from cache or install if missing
-        uses: ./.github/actions/cache.yaml
+        uses: ./.github/actions/
 
       - name: Install dependencies
         run: npm ci
