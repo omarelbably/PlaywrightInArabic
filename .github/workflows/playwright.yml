@@ -65,8 +65,17 @@ jobs:
           name: allure-results
           path: allure-report/
           retention-days: 30
+          
+      - name: Upload allure report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-test-results
+          path: test-results/
+          retention-days: 30
 
   run-snyk-scan:
+    needs: run-playwright-test
     name: Snyk scan
     runs-on: ubuntu-latest
     steps:
@@ -77,6 +86,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
 
   run-sonarqube-scan:
+    needs: run-playwright-test
     name: SonarQube
     runs-on: windows-latest
     steps:
@@ -89,6 +99,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   run-zap-scan:
+    needs: run-playwright-test
     name: Zap scan
     runs-on: ubuntu-latest
     steps:  
