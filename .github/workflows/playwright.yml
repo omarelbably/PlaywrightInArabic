@@ -16,11 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Get Playwright browsers from cache or install if missing
-        uses: ./.github/actions/
-
       - name: Install dependencies
         run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      
       - name: Run Playwright tests
         run: npm run test
       - name: Upload allure report
