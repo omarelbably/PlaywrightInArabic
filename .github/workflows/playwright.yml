@@ -4,9 +4,36 @@ on:
     - cron: '0 12 * * *'
   push:
     branches:
-      - '**'
+      - 'master'
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      test-to-run:
+        description: 'Add your npx code here'
+        required: false
+        default: 'npm run script:to:run'
+        type: string
+      workers:
+        description: 'Number of workers to use'
+        required: false
+        default: '1'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+      browsers:
+        description: 'Browsers to run tests on'
+        required: false
+        default: 'chromium'
+        type: choice
+        options:
+          - 'chromium'
+          - 'firefox'
+          - 'webkit'
+          - 'all'
 
 jobs:
   run-playwright-test:
@@ -23,7 +50,14 @@ jobs:
         run: npx playwright install --with-deps
       
       - name: Run Playwright tests
-        run: npm run test
+        env:
+          test-to-run: ${{github.event.inputs.test-to-run || 'npm run script:to:run'}}
+          workers: ${{github.event.inputs.workers || '1'}}
+          browsers: ${{github.event.inputs.browsers || 'chromium'}}
+        run: |
+          ${{env.test-to-run}} -- --workers=${{env.workers}} --project=${{env.browsers}} || npm run posttest
+
+
       - name: Upload allure report
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
