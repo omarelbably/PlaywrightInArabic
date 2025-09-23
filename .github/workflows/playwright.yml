@@ -42,9 +42,8 @@ on:
         description: 'Base URL for tests'
         required: false
         default: ''
-        type: choice
-        options:
-          - '--base-url=https://STG.com'
+        type: string
+
 
 jobs:
   run-playwright-test:
