@@ -1,4 +1,6 @@
 name: Run playwright test cases with caching
+env:
+  test-to-run: ${{ github.event.inputs.test-to-run }}
 on:
   schedule:
     - cron: '0 12 * * *'
@@ -20,7 +22,7 @@ on:
         type: string
 
 jobs:
-  run-dockerized-playwright-test:
+  run-playwright-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -35,8 +37,13 @@ jobs:
 
       - name: Run tests
         run: | 
-          echo "${{ github.event.inputs.test-to-run }}"
-
+          ${{env.test-to-run}}
+  
+  Fetch-Playwright-Test-Results:
+    needs: run-playwright-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - name: Upload allure report
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -54,7 +61,7 @@ jobs:
           retention-days: 30
           
   run-snyk-scan:
-    needs: run-dockerized-playwright-test
+    needs: Fetch-Playwright-Test-Results
     name: Snyk scan
     runs-on: ubuntu-latest
     steps:
@@ -65,7 +72,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
 
   run-sonarqube-scan:
-    needs: run-dockerized-playwright-test
+    needs: Fetch-Playwright-Test-Results
     name: SonarQube
     runs-on: windows-latest
     steps:
@@ -78,7 +85,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   run-zap-scan:
-    needs: run-dockerized-playwright-test
+    needs: Fetch-Playwright-Test-Results
     name: Zap scan
     runs-on: ubuntu-latest
     steps:  
