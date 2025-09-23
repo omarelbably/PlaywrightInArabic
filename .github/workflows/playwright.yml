@@ -41,8 +41,10 @@ on:
       base-url:
         description: 'Base URL for tests'
         required: false
-        default: '--base-url=https://example.com'
-        type: string
+        default: ''
+        type: choice
+        options:
+          - '--base-url=https://STG.com'
 
 jobs:
   run-playwright-test:
