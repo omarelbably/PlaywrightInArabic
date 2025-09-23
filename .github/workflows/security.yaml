@@ -1,4 +1,4 @@
-name: Playwright Tests with Caching
+name: Run Security Scans
 on:
   workflow_run:
     workflows: [Playwright Tests with Caching]
