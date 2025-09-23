@@ -35,7 +35,7 @@ jobs:
 
       - name: Run tests
         env:
-          test-to-run: ${{ github.event.inputs.test-to-run }}
+          test-to-run: ${{ github.event.inputs.test-to-run || 'npm run test' }}
         run: | 
           ${{env.test-to-run}}
   
