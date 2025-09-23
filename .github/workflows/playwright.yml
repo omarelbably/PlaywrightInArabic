@@ -96,7 +96,14 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
 
   run-sonarqube-scan:
-    if: contains(join(github.event.commits.*.modified), '**/tests/*')
+    if: |
+      ${{github.event_name}} == 'push' &&
+        (
+          contains(join(github.event.commits.*.added), 'tests/') ||
+          contains(join(github.event.commits.*.modified), 'tests/') ||
+          contains(join(github.event.commits.*.removed), 'tests/')
+        )
+
     needs: run-playwright-test
     name: SonarQube
     runs-on: windows-latest
