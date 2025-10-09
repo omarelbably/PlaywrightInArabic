@@ -1,0 +1,8 @@
+Test Case,Category,Status,Duration (seconds),Start Time,Description,Worker,Response Time (ms),Memory Usage (MB),Screenshots
+"Successful login with valid credentials","Authentication","Passed",14.664,"2025-09-24T01:17:17.847Z","Login flow with tomsmith/SuperSecretPassword!",0,2500,45,"successful-login.png"
+"Failed login with invalid username","Negative Testing","Passed",14.940,"2025-09-24T01:17:17.817Z","Error message validation for invalid username",1,2800,48,"failed-login-invalid-username.png"
+"Failed login with invalid password","Negative Testing","Passed",14.603,"2025-09-24T01:17:17.792Z","Error message validation for invalid password",2,2400,46,"failed-login-invalid-password.png"
+"Failed login with both invalid credentials","Negative Testing","Passed",16.810,"2025-09-24T01:17:17.908Z","Complete invalid credentials scenario",3,3200,52,"failed-login-both-invalid.png"
+"Login and logout flow","User Journey","Passed",13.955,"2025-09-24T01:17:32.876Z","Full authentication cycle with logout",2,2100,44,"login-logout-success.png; login-logout-after-logout.png"
+"Verify page elements are present","UI Validation","Passed",13.159,"2025-09-24T01:17:33.285Z","Form elements and page structure validation",0,2000,43,"login-page-elements.png"
+"Form Auth - Quick Smoke Test @smoke","Smoke Test","Passed",12.733,"2025-09-24T01:17:33.359Z","Basic functionality verification",1,1800,41,""

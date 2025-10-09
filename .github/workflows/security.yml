@@ -1,0 +1,39 @@
+name: Playwright Tests with Caching
+on:
+    workflow_run:
+      workflows: [Playwright Tests with Caching]
+      types:
+        - completed
+  
+jobs:
+  run-snyk-scan:
+    name: Snyk scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
+
+  run-sonarqube-scan:
+    name: SonarQube
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  run-zap-scan:
+    name: Zap scan
+    runs-on: ubuntu-latest
+    steps:  
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.12.0
+        continue-on-error: true
+        with:
+          target: ${{ secrets.ZAP_TARGET_URL }}

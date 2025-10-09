@@ -1,0 +1,218 @@
+{
+  "reportMetadata": {
+    "generatedDate": "2025-09-24T01:17:15.309Z",
+    "reportVersion": "1.0.0",
+    "framework": "Playwright",
+    "testSuite": "Form Authentication Tests",
+    "totalDuration": 32.045,
+    "totalTests": 7,
+    "passedTests": 7,
+    "failedTests": 0,
+    "successRate": 100,
+    "workers": 4
+  },
+  "testResults": [
+    {
+      "id": "successful-login",
+      "title": "Successful login with valid credentials",
+      "category": "Authentication",
+      "status": "passed",
+      "duration": 14.664,
+      "startTime": "2025-09-24T01:17:17.847Z",
+      "description": "Login flow with tomsmith/SuperSecretPassword!",
+      "worker": 0,
+      "retry": 0,
+      "tags": [],
+      "screenshots": ["successful-login.png"],
+      "metrics": {
+        "responseTime": 2500,
+        "memoryUsage": 45
+      }
+    },
+    {
+      "id": "failed-login-invalid-username",
+      "title": "Failed login with invalid username",
+      "category": "Negative Testing",
+      "status": "passed",
+      "duration": 14.940,
+      "startTime": "2025-09-24T01:17:17.817Z",
+      "description": "Error message validation for invalid username",
+      "worker": 1,
+      "retry": 0,
+      "tags": [],
+      "screenshots": ["failed-login-invalid-username.png"],
+      "metrics": {
+        "responseTime": 2800,
+        "memoryUsage": 48
+      }
+    },
+    {
+      "id": "failed-login-invalid-password",
+      "title": "Failed login with invalid password",
+      "category": "Negative Testing",
+      "status": "passed",
+      "duration": 14.603,
+      "startTime": "2025-09-24T01:17:17.792Z",
+      "description": "Error message validation for invalid password",
+      "worker": 2,
+      "retry": 0,
+      "tags": [],
+      "screenshots": ["failed-login-invalid-password.png"],
+      "metrics": {
+        "responseTime": 2400,
+        "memoryUsage": 46
+      }
+    },
+    {
+      "id": "failed-login-both-invalid",
+      "title": "Failed login with both invalid credentials",
+      "category": "Negative Testing",
+      "status": "passed",
+      "duration": 16.810,
+      "startTime": "2025-09-24T01:17:17.908Z",
+      "description": "Complete invalid credentials scenario",
+      "worker": 3,
+      "retry": 0,
+      "tags": [],
+      "screenshots": ["failed-login-both-invalid.png"],
+      "metrics": {
+        "responseTime": 3200,
+        "memoryUsage": 52
+      }
+    },
+    {
+      "id": "login-logout-flow",
+      "title": "Login and logout flow",
+      "category": "User Journey",
+      "status": "passed",
+      "duration": 13.955,
+      "startTime": "2025-09-24T01:17:32.876Z",
+      "description": "Full authentication cycle with logout",
+      "worker": 2,
+      "retry": 0,
+      "tags": [],
+      "screenshots": ["login-logout-success.png", "login-logout-after-logout.png"],
+      "metrics": {
+        "responseTime": 2100,
+        "memoryUsage": 44
+      }
+    },
+    {
+      "id": "page-elements-validation",
+      "title": "Verify page elements are present",
+      "category": "UI Validation",
+      "status": "passed",
+      "duration": 13.159,
+      "startTime": "2025-09-24T01:17:33.285Z",
+      "description": "Form elements and page structure validation",
+      "worker": 0,
+      "retry": 0,
+      "tags": [],
+      "screenshots": ["login-page-elements.png"],
+      "metrics": {
+        "responseTime": 2000,
+        "memoryUsage": 43
+      }
+    },
+    {
+      "id": "smoke-test",
+      "title": "Form Auth - Quick Smoke Test @smoke",
+      "category": "Smoke Test",
+      "status": "passed",
+      "duration": 12.733,
+      "startTime": "2025-09-24T01:17:33.359Z",
+      "description": "Basic functionality verification",
+      "worker": 1,
+      "retry": 0,
+      "tags": ["smoke"],
+      "screenshots": [],
+      "metrics": {
+        "responseTime": 1800,
+        "memoryUsage": 41
+      }
+    }
+  ],
+  "categoryBreakdown": {
+    "Authentication": 1,
+    "Negative Testing": 3,
+    "User Journey": 1,
+    "UI Validation": 1,
+    "Smoke Test": 1
+  },
+  "performanceMetrics": {
+    "averageDuration": 14.41,
+    "fastestTest": {
+      "name": "Form Auth - Quick Smoke Test @smoke",
+      "duration": 12.733
+    },
+    "slowestTest": {
+      "name": "Failed login with both invalid credentials",
+      "duration": 16.810
+    },
+    "averageResponseTime": 2400,
+    "averageMemoryUsage": 45.6
+  },
+  "screenshots": [
+    {
+      "filename": "successful-login.png",
+      "testCase": "Successful login with valid credentials",
+      "description": "Login success page screenshot"
+    },
+    {
+      "filename": "failed-login-invalid-username.png",
+      "testCase": "Failed login with invalid username",
+      "description": "Error message for invalid username"
+    },
+    {
+      "filename": "failed-login-invalid-password.png",
+      "testCase": "Failed login with invalid password",
+      "description": "Error message for invalid password"
+    },
+    {
+      "filename": "failed-login-both-invalid.png",
+      "testCase": "Failed login with both invalid credentials",
+      "description": "Error message for both invalid credentials"
+    },
+    {
+      "filename": "login-logout-success.png",
+      "testCase": "Login and logout flow",
+      "description": "Successful login before logout"
+    },
+    {
+      "filename": "login-logout-after-logout.png",
+      "testCase": "Login and logout flow",
+      "description": "Page after logout"
+    },
+    {
+      "filename": "login-page-elements.png",
+      "testCase": "Verify page elements are present",
+      "description": "Login page with all elements visible"
+    }
+  ],
+  "environmentInfo": {
+    "os": "Windows",
+    "browser": "Chromium",
+    "playwrightVersion": "1.54.2",
+    "testFramework": "Playwright Test",
+    "nodeVersion": "Node.js",
+    "testDir": "./tests",
+    "configFile": "playwright.config.ts",
+    "parallel": true,
+    "workers": 4,
+    "retries": 0,
+    "timeout": 30000
+  },
+  "technicalDetails": {
+    "reportFormat": "HTML",
+    "charting": "Chart.js",
+    "styling": "CSS3 with animations",
+    "responsive": true,
+    "interactive": true,
+    "exportFormats": ["HTML", "JSON", "PDF"],
+    "dependencies": {
+      "chartjs": "CDN",
+      "fontawesome": "CDN",
+      "embedded": true
+    }
+  }
+}

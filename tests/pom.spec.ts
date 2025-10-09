@@ -7,6 +7,7 @@ import { get } from "http";
 import path from 'path';
 import Actions from "./pages/actions";
 import * as dotenv from 'dotenv';
+import { log } from "console";
 dotenv.config({path: './.env'});
 
 let page:any;
@@ -54,9 +55,14 @@ test('getText', async()=>{
     const title = page.locator('.login_logo');
     const loginBtn = page.locator('[id="login-button"]');
     // actions.getElementScreenshot(title, path.join(__dirname, '../tests/screenshots/title.png'));
+    expect(await page.screenshot()).toMatchSnapshot('loginPage.png');
+    expect(page).toHaveScreenshot('page.png');
     expect(await title.screenshot()).toMatchSnapshot('title.png');
     expect(await loginBtn.screenshot()).toMatchSnapshot('loginBtn.png');
-    console.log(await actions.getElementText(title));    
+    expect(await actions.getElementText(title)).toMatchSnapshot('loginBtnText.txt');
+    console.log(await actions.getElementText(title));
+    expect(await loginBtn).toHaveCSS('margin-bottom', '15px');
+    expect(await loginBtn).toHaveCSS('display','inline-block');
 });
 
 test('codegenT', async () => {
@@ -74,4 +80,22 @@ test('codegenT', async () => {
   await expect(page.locator('[data-test="checkout"]')).toBeVisible();
   await page.locator('[data-test="checkout"]').click();
   await expect(page.locator('[data-test="firstName"]')).toBeVisible();
+});
+
+
+
+
+test('Visual Testing', async()=> {
+    await page.goto('https://www.saucedemo.com/');
+
+    const title = page.locator('.login_logo');
+    const loginBtn = page.locator('[id="login-button"]');
+
+    expect(await page.screenshot()).toMatchSnapshot('loginPage.png');
+    expect(await title.screenshot()).toMatchSnapshot('title.png');
+    expect(await loginBtn.screenshot()).toMatchSnapshot('loginBtn.png');
+    expect(await actions.getElementText(title)).toMatchSnapshot('titleText.txt');
+
+    expect(await loginBtn).toHaveCSS('display', 'inline-block');
+    expect(await loginBtn).toHaveCSS('margin-bottom', '15px');
 });
