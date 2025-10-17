@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-10-16T20:31:05.417Z",
+  "totalViolations": 3,
+  "criticalViolations": 1,
+  "seriousViolations": 1,
+  "moderateViolations": 1,
+  "minorViolations": 0,
+  "pagesAnalyzed": 1,
+  "testResults": [],
+  "summary": {
+    "totalTests": 1,
+    "passedTests": 0,
+    "failedTests": 1,
+    "complianceScore": 0,
+    "wcagLevel": "AA",
+    "principleBreakdown": {
+      "perceivable": 2,
+      "operable": 1,
+      "understandable": 0,
+      "robust": 0
+    }
+  }
+}
