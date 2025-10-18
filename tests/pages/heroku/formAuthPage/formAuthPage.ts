@@ -1,4 +1,4 @@
-import BasePage from "../basePage";
+import BasePage from "../../basePage";
 import { expect } from '@playwright/test';
 
 export default class FormAuthPage extends BasePage {

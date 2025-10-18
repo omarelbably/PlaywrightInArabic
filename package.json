@@ -18,7 +18,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
-    "@playwright/test": "^1.56.0",
+    "@playwright/test": "^1.56.1",
     "@types/node": "^24.6.0",
     "allure-commandline": "^2.34.1",
     "allure-playwright": "^3.4.1",
@@ -30,5 +30,6 @@
     "pa11y": "^9.0.1",
     "puppeteer": "^24.22.3",
     "rimraf": "^6.0.1"
-  }
+  },
+  "dependencies": {}
 }
